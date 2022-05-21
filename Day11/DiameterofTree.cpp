@@ -1,20 +1,17 @@
 class Solution {
 public:
-    int h(TreeNode *root){
+    int h(TreeNode *root, int &ans){
         if(!root)return 0;
-        return (1+max(h(root->left),h(root->right)));
-    }
-    void check(TreeNode *root, int &ans){
-        if(!root)return;
-        ans = max(ans,h(root->left)+h(root->right)); 
-        check(root->left,ans);
-        check(root->right,ans);
+        int lh = h(root->left,ans);
+        int rh = h(root->right,ans);
+        ans = max(ans,lh+rh);
+        return (1+max(lh,rh));
     }
     
     int diameterOfBinaryTree(TreeNode* root) {
         
         int ans = 0;
-        check(root,ans);
+        h(root,ans);
         return ans;
     }
 };
